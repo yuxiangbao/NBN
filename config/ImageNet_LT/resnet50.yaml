@@ -1,0 +1,35 @@
+resume: null
+pretrained: null
+
+criterion:
+  type: CrossEntropyLoss
+  reduction: mean
+optimizer:
+  type: SGD
+  lr: 0.2
+  momentum: 0.9
+  weight_decay: 0.0005
+scheduler:
+    type: CosineAnnealingLR
+    T_max: 90
+    eta_min: 0
+shuffle: True
+
+# training_opt
+arch: resnet50
+batch_size: 512
+dataset: ImageNet_LT
+data_root: /path/to/dataset
+start_epoch: 0
+print_freq: 100
+log_dir: ./logs/ImageNet_LT/models
+log_root: /logs/ImageNet_LT
+num_classes: 1000
+epochs: 90
+workers: 16
+sampler: null
+sub_dir: models
+train_all: True
+
+train_mode: 
+  type: plain_train
