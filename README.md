@@ -1,9 +1,13 @@
 # Normalizing Batch Normalization for Long-Tailed Recognition
 
+<font size=7><div align='center' >
+[![ GitHub stars ](https://badgen.net/github/stars/yuxiangbao/NBN)](https://github.com/yuxiangbao/NBN)
+[![arXiv](https://img.shields.io/badge/arXiv-2501.03122-972B24)](https://arxiv.org/pdf/2501.03122)
+</div></font>
+
 <div align=center>
 <img src="assets/motivation.png" style="width:70%;">
 </div>
-
 
 ## 🛠️ Installation
 ```shell
@@ -18,16 +22,16 @@ Before training, please download the datasets following [Kang](https://github.co
 
 ### 2. Training
 
-We provide the [launch.sh](./launch.sh) script to initiate the training process. This script supports both single-GPU and multi-GPU training using FP32 and FP16 precision modes. For multi-GPU setups, it leverages Data Parallel and Distributed Data Parallel (DDP) for efficient parallel processing.
+We provide the [launch.sh](./launch.sh) script to initiate the training process. This script supports both single-GPU and multi-GPU training using FP32 and FP16 precision modes. For multi-GPU setups, it supports both Data Parallel (DP) and Distributed Data Parallel (DDP).
 ```shell
 # training with single gpu
-python main.py config/ImageNet_LT/ride.yaml --gpu $gpu_id --amp
+python main.py /path/to/config --gpu $gpu_id --amp
 
 # training with data parallel
-python main.py config/ImageNet_LT/ride.yaml --amp
+python main.py /path/to/config --amp
 
 # training with distributed data parallel
-python main.py config/ImageNet_LT/ride.yaml -d --world-size 1 --rank 0 --amp
+python main.py /path/to/config -d --world-size 1 --rank 0 --amp
 ```
 
 ### 3. Validation
@@ -35,7 +39,7 @@ python main.py config/ImageNet_LT/ride.yaml -d --world-size 1 --rank 0 --amp
 Likewise, the code also support single-gpu and multi-gpu validation. For multi-GPU validation, we use Distributed Data Parallel (DDP) as an example.
 
 ```shell
-python main.py config/ImageNet_LT/ride_nbn_lr.yaml -d --world-size 1 --rank 0 --amp -e --pretrain /path/to/checkpoints
+python main.py /path/to/config -d --world-size 1 --rank 0 --amp -e --pretrain /path/to/checkpoints
 ```
 
 The checkpoints can be freely downloaded from [Google Drive](https://drive.google.com/file/d/1ebEgsvbp00AvKcfa2JQRK8rVoQ6Ab38C/view?usp=sharing) or [Baidu Pan](https://pan.baidu.com/s/1feTkJ6h3HUG24lehOr9BUw?pwd=6fdv).
@@ -43,7 +47,7 @@ The checkpoints can be freely downloaded from [Google Drive](https://drive.googl
 
 ## ⭐ Cite
 
-If you find this project useful in your research, we appreciate your citation of our work:
+If you find this project useful in your research, we appreciate your star and citation of our work:
 
 ```
 @article{bao2024normalizing,
@@ -56,7 +60,7 @@ If you find this project useful in your research, we appreciate your citation of
 ```
 
 ## 🎖️ Acknowledgement
-This work is built upon the [decoupling cRT](https://github.com/facebookresearch/classifier-balancing), [Balanced Softmax](https://github.com/jiawei-ren/BalancedMetaSoftmax-Classification), and [RoBal](https://github.com/wutong16/Adversarial_Long-Tail).
+This work is built upon the [decoupling cRT](https://github.com/facebookresearch/classifier-balancing), [Balanced Softmax](https://github.com/jiawei-ren/BalancedMetaSoftmax-Classification), [RoBal](https://github.com/wutong16/Adversarial_Long-Tail), and [supsup](https://github.com/RAIVNLab/supsup).
 
 ## 🦄 Contact
 Please contact [@yuxiangbao](https://github.com/yuxiangbao) for questions, comments and reporting bugs.
