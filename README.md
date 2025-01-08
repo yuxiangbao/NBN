@@ -9,6 +9,36 @@
 <img src="assets/motivation.png" style="width:70%;">
 </div>
 
+## 🎯 Snapshot
+
+```python
+class BatchNorm2d(nn.BatchNorm2d):        
+    def scale(self, alpha):
+        self.w = self.weight / (torch.norm(self.weight)+1e-6) * alpha
+        if self.bias is not None:
+            self.b = self.bias / (torch.norm(self.bias)+1e-6) * alpha
+        else:
+            self.b = self.bias
+            
+    def forward(self, input):
+        self._check_input_dim(input)
+        w = self.w if hasattr(self, 'w') else self.weight
+        b = self.b if hasattr(self, 'b') else self.bias
+        x = F.batch_norm(
+            input,
+            self.running_mean
+            if not self.training or self.track_running_stats
+            else None,
+            self.running_var if not self.training or self.track_running_stats else None,
+            w,
+            b,
+            bn_training,
+            exponential_average_factor,
+            self.eps,
+        )
+        return x
+```
+
 ## 🛠️ Installation
 ```shell
 pip install -r requirements.txt
